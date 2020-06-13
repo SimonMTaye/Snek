@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         this._difficulty = difficulty;
     }
     public void PelletCollected(){
-        spawnManager.SpawnPellet();
+        StartCoroutine(PelletSpawner());
     }
     IEnumerator PelletSpawner(){
         yield return new WaitForSeconds(5f);
