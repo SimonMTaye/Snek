@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject playerPrefab;
     private SpawnManager spawnManager;
+    private GridManager gridManager; 
     public float blockSpawnDelay = 10f;
     private float blockTimer = 0f;
 

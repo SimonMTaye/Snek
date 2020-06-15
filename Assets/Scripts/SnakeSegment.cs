@@ -7,9 +7,12 @@ public class SnakeSegment : MonoBehaviour
     [SerializeField]
     protected SnakeSegment child;
     protected GameManager gameManager;
+    protected GridManager gridManager;
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gridManager = GameObject.Find("GridManager").GetComponent<GridManager>();
+        this.transform.localScale = gridManager.blockScale;
     }
 
     // Update is called once per frame

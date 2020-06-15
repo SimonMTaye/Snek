@@ -8,25 +8,23 @@ public class SpawnManager : MonoBehaviour
     private GameObject blockPrefab;
     [SerializeField]
     private GameObject growthPellet;
-    float rightBound = 8.42f;
-    float leftBound = -8.45f;
-    float upperBound = 4.58f;
-    float lowerBound = -4.56f;
+    [SerializeField]
+    private GridManager gridManager;
     // Start is called before the first frame update
+    void Start() {
+    }
     public void SpawnPellet(){
-        Instantiate(growthPellet, GenerateRandomVector3(), Quaternion.identity);
+        GameObject pellet = Instantiate(growthPellet, GenerateRandomVector3(), Quaternion.identity);
+        pellet.transform.localScale = gridManager.blockScale / 2f;
     }
     public void SpawnBlock(){
-        Instantiate(blockPrefab, GenerateRandomVector3(), Quaternion.identity);
-    }
+        GameObject block = Instantiate(blockPrefab, GenerateRandomVector3(), Quaternion.identity);
+        block.transform.localScale = gridManager.blockScale;
+    }   
     public Vector3 GenerateRandomVector3(){
-        float xPos = Random.Range(leftBound, rightBound);
-        float yPos = Random.Range(lowerBound, upperBound);
-        Vector3 generatedPos = new Vector3(xPos, yPos, 0);
-        if (!Physics.CheckSphere(generatedPos, 2f)){
-            return generatedPos;
-        } else {
-            return GenerateRandomVector3();
-        }
+        int xPos = Random.Range(1, (int)gridManager.columns);
+        int yPos = Random.Range(1, (int)gridManager.rows);
+        return gridManager.GridToWorldPos(xPos, yPos);
+        //TODO Check if grid position is occupied
     }
 }
