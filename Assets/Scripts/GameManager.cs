@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private float speedIncreaseRate;
     public enum Difficulties
     {
-        EASY,
+        EASY = 0,
         MEDIUM,
         HARD,
         VERY_HARD

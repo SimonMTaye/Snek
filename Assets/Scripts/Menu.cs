@@ -13,8 +13,8 @@ public class Menu : MonoBehaviour
     private Scrollbar gridSizeSlider;
 
     private void Start() {
-        difficultySlider.value = (float)PlayerPrefs.GetInt("Difficulty") / difficultySlider.numberOfSteps;
-        gridSizeSlider.value = (float)PlayerPrefs.GetInt("Grid Size") / difficultySlider.numberOfSteps;
+        difficultySlider.value = (float)PlayerPrefs.GetInt("Difficulty") / (difficultySlider.numberOfSteps - 1);
+        gridSizeSlider.value = ((float)PlayerPrefs.GetInt("Grid Size") + -1f) / (gridSizeSlider.numberOfSteps -1);
     }
 
     public void ShowSettings(){
@@ -27,11 +27,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
     public void SetDifficulty(){
-        int difficulty = Mathf.RoundToInt(difficultySlider.value * difficultySlider.numberOfSteps);
+        int difficulty = Mathf.RoundToInt(difficultySlider.value * (difficultySlider.numberOfSteps -1));
         PlayerPrefs.SetInt("Difficulty", difficulty);
     }
     public void SetGridSize(){
-        int size = Mathf.RoundToInt(gridSizeSlider.value * gridSizeSlider.numberOfSteps);
+        int size = Mathf.RoundToInt(gridSizeSlider.value * (gridSizeSlider.numberOfSteps -1 )) + 1;
         PlayerPrefs.SetInt("Grid Size", size);
     }
 
