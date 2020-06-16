@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Restart time incase game was quitted while paused
+        Time.timeScale = 1;
         //Spawn initial blocks
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         player = GameObject.Find("Snek").GetComponent<SnakeHead>();
