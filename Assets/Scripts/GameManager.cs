@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
     }
     //Called when player collides with self or block
     public void GameOver(){
-        Time.timeScale = 0;
         uIManager.GameOver(score);
     }
 
