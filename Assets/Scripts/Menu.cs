@@ -39,5 +39,8 @@ public class Menu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)){
             HideSettings();
         }
+        if(Input.GetKeyDown(KeyCode.Space)){
+            StartGame();
+        }
     }
 }
