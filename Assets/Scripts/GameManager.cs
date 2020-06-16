@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private SpawnManager spawnManager;
     private GridManager gridManager; 
+    //Determines how often blocks will be spawned
     public float blockSpawnDelay = 10f;
     private float blockTimer = 0f;
 
@@ -17,9 +18,11 @@ public class GameManager : MonoBehaviour
         VERY_HARD
     }
     private Difficulties _difficulty;
+    
     // Start is called before the first frame update
     void Start()
     {
+        //Spawn initial blocks
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         spawnManager.SpawnPellet();
         spawnManager.SpawnBlock();
@@ -34,17 +37,16 @@ public class GameManager : MonoBehaviour
             spawnManager.SpawnBlock();
         }
     }
-
-    public void SetDiffculty(Difficulties difficulty){
-        this._difficulty = difficulty;
-    }
+    // Called when player consumes pellet. 
     public void PelletCollected(){
         StartCoroutine(PelletSpawner());
     }
+    //Spawns a new pellet after a fixed delay
     IEnumerator PelletSpawner(){
         yield return new WaitForSeconds(5f);
         spawnManager.SpawnPellet();
     }
+    //Called when player collides with self or block
     public void GameOver(){
         Time.timeScale = 0;
     }
