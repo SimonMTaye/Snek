@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField]
     private GameObject pauseMenu;
     [SerializeField]
@@ -28,10 +28,11 @@ public class UIManager : MonoBehaviour
     }
     public void GameOver(int score){
         PlayerPrefs.SetInt("Last Score", score);
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 
     public void MainMenu(){
-
+        SceneManager.LoadScene("Home", LoadSceneMode.Single);
     }
 
     public void UpdateScore(int score){
