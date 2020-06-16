@@ -15,10 +15,9 @@ public class ScoreMenu : MonoBehaviour
     private int score;
     void Start()
     {
-        score = PlayerPrefs.GetInt("Last Score", 0);
+        score = PlayerPrefs.GetInt("Last Score");
         DisplayAndSetHighScore();
         DisplayScore();
-         
     }
 
     public void MainMenu(){
@@ -36,6 +35,7 @@ public class ScoreMenu : MonoBehaviour
                 highScoredDisplay.text = "High Score: " + highScore;
             } else {
                 highScoredDisplay.text = "Congratulations! You set a new high score!";
+                PlayerPrefs.SetInt("High Score", score);
             }
         } else {
             highScoredDisplay.gameObject.SetActive(false);
