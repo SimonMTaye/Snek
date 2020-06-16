@@ -14,17 +14,21 @@ public class SpawnManager : MonoBehaviour
     void Start() {
     }
     public void SpawnPellet(){
-        GameObject pellet = Instantiate(growthPellet, GenerateRandomVector3(), Quaternion.identity);
+        GameObject pellet = Instantiate(growthPellet, GenerateRandomPosition(), Quaternion.identity);
         pellet.transform.localScale = gridManager.blockScale / 2f;
     }
     public void SpawnBlock(){
-        GameObject block = Instantiate(blockPrefab, GenerateRandomVector3(), Quaternion.identity);
+        GameObject block = Instantiate(blockPrefab, GenerateRandomPosition(), Quaternion.identity);
         block.transform.localScale = gridManager.blockScale;
     }   
-    public Vector3 GenerateRandomVector3(){
+    public Vector3 GenerateRandomPosition(){
         int xPos = Random.Range(1, (int)gridManager.columns);
         int yPos = Random.Range(1, (int)gridManager.rows);
-        return gridManager.GridToWorldPos(xPos, yPos);
-        //TODO Check if grid position is occupied
+        Vector3 spawnPoint =  gridManager.GridToWorldPos(xPos, yPos);
+        if (Physics2D.OverlapCircle(spawnPoint, 1f)){
+            return GenerateRandomPosition();
+        } else {
+            return spawnPoint;
+        }
     }
 }
