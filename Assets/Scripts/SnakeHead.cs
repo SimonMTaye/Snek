@@ -21,7 +21,6 @@ public class SnakeHead : SnakeSegment {
     public float speed = 6.0f;
     // World bounds for wraping
     private float rightBound, upperBound;
-    [SerializeField]
     private void Start() {
         StartCoroutine(MoveSnake());
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -81,7 +80,6 @@ public class SnakeHead : SnakeSegment {
         }
         _prevDirection = _direction;
         if(child){
-            print("moving child");
             child.Move(oldPos);
         }
         StartCoroutine(MoveSnake());
@@ -103,6 +101,7 @@ public class SnakeHead : SnakeSegment {
         //Determine size of world for wraping when off screen
         upperBound = Camera.main.orthographicSize - (0.5f * this.transform.localScale.x);
         rightBound = (Camera.main.orthographicSize * Camera.main.aspect) - (0.5f * this.transform.localScale.y);
+        print(upperBound + " , " + rightBound);
     }
     private void OnTriggerEnter2D(Collider2D other) {
         // Grow when pellet is consumed, else lose on collision
