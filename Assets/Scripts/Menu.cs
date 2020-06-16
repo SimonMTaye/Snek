@@ -13,8 +13,13 @@ public class Menu : MonoBehaviour
     private Scrollbar gridSizeSlider;
 
     private void Start() {
+        if(PlayerPrefs.GetInt("First Run", 0) == 0){
+            PlayerPrefs.SetInt("Difficulty", 1);
+            PlayerPrefs.SetInt("Grid Size", 2);
+            PlayerPrefs.SetInt("First Run", 1);
+        }
         difficultySlider.value = (float)PlayerPrefs.GetInt("Difficulty") / (difficultySlider.numberOfSteps - 1);
-        gridSizeSlider.value = ((float)PlayerPrefs.GetInt("Grid Size") + -1f) / (gridSizeSlider.numberOfSteps -1);
+        gridSizeSlider.value = ((float)PlayerPrefs.GetInt("Grid Size") + -1f) / (gridSizeSlider.numberOfSteps -1);        
     }
 
     public void ShowSettings(){
