@@ -18,8 +18,7 @@ public class SnakeHead : SnakeSegment {
     private Directions _direction = Directions.LEFT;
     //Used to validate movment direction
     private Directions _prevDirection = Directions.LEFT;
-    [SerializeField]
-    private float speed = 6.0f;
+    public float speed = 6.0f;
     // World bounds for wraping
     private float rightBound, upperBound;
     [SerializeField]
