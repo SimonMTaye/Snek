@@ -34,7 +34,6 @@ public class GridManager : MonoBehaviour
             -Camera.main.orthographicSize - (0.5f * 1f / SpritesToWorldUnit), 
             1
             );
-        print(gridOrigin);
     }
     public Vector3 GridToWorldPos(int gridX, int gridY)
     {
