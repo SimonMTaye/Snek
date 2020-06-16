@@ -13,9 +13,10 @@ public class GridManager : MonoBehaviour
     public Vector3 gridOrigin;
     //Determines how many sprites a single world unit can bold.
     //Settings this to a larger number will decrease the size of the sprites (increases the number of grid sqaures)
-    public int SpritesToWorldUnit = 1;
+    public int SpritesToWorldUnit;
     private void Awake()
     {
+        SpritesToWorldUnit = PlayerPrefs.GetInt("Grid Size", 2);
         InitGrid();
     }
     private void InitGrid()
