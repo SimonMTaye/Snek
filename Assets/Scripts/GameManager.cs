@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private UIManager uIManager;
     private SpawnManager spawnManager;
     private GridManager gridManager;
     private SnakeHead player;
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
         //Spawn initial blocks
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         player = GameObject.Find("Snek").GetComponent<SnakeHead>();
+        uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         spawnManager.SpawnPellet();
         spawnManager.SpawnBlock();
         //Start Coroutines
@@ -82,10 +84,12 @@ public class GameManager : MonoBehaviour
     //Called when player collides with self or block
     public void GameOver(){
         Time.timeScale = 0;
+        uIManager.GameOver(score);
     }
 
     private void IncreaseScore(int increaseValue){
         score += (int)(increaseValue * scoreMultiplier);
+        uIManager.UpdateScore(score);
     }
     //Adjust game values based on selected difficulty values
     private void SetValuesBasedOnDifficulty(){
