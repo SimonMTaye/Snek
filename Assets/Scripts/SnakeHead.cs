@@ -22,8 +22,6 @@ public class SnakeHead : SnakeSegment {
     // World bounds for wraping
     private float rightBound, upperBound;
     [SerializeField]
-    private SnakeSegment child;
-
     private void Start() {
         StartCoroutine(MoveSnake());
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();

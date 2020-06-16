@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SnakeSegment : MonoBehaviour
 {
-    private SnakeSegment child;
+    protected SnakeSegment child;
     public void Move (Vector3 pos){
         // Move to parent position and move child to this segment's old position
         Vector3 oldPos = this.transform.position;
