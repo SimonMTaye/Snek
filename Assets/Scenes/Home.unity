@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsPanel: {fileID: 1438960891}
+  difficultySlider: {fileID: 613828512}
+  gridSizeSlider: {fileID: 1832582036}
 --- !u!114 &91353620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +492,7 @@ GameObject:
   - component: {fileID: 613828513}
   - component: {fileID: 613828512}
   m_Layer: 5
-  m_Name: Scrollbar
+  m_Name: Difficulty Scrollbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1723,7 +1725,7 @@ GameObject:
   - component: {fileID: 1832582037}
   - component: {fileID: 1832582036}
   m_Layer: 5
-  m_Name: Scrollbar
+  m_Name: GridSize Scrollbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

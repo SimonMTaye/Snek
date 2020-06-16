@@ -7,13 +7,14 @@ public class Menu : MonoBehaviour
 {
     [SerializeField]
     private GameObject settingsPanel;
+    [SerializeField]
     private Scrollbar difficultySlider;
+    [SerializeField]
     private Scrollbar gridSizeSlider;
 
     private void Start() {
-        //TODO Set scrollbar values based on play prefs
-        //TODO Figoure out how to round up values to ints
-        print((4 * 0.17));
+        difficultySlider.value = (float)PlayerPrefs.GetInt("Difficulty") / difficultySlider.numberOfSteps;
+        gridSizeSlider.value = (float)PlayerPrefs.GetInt("Grid Size") / difficultySlider.numberOfSteps;
     }
 
     public void ShowSettings(){
@@ -26,12 +27,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
     public void SetDifficulty(){
-        //int difficulty = (int) (difficultySlider.value * difficultySlider.steps);
-        int difficulty = 1;
+        int difficulty = Mathf.RoundToInt(difficultySlider.value * difficultySlider.numberOfSteps);
         PlayerPrefs.SetInt("Difficulty", difficulty);
     }
     public void SetGridSize(){
-        int size = 1;
+        int size = Mathf.RoundToInt(gridSizeSlider.value * gridSizeSlider.numberOfSteps);
         PlayerPrefs.SetInt("Grid Size", size);
     }
 
