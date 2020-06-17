@@ -98,27 +98,27 @@ public class GameManager : MonoBehaviour
             case Difficulties.EASY:
                 blockSpawnDelay = 10f;
                 scoreMultiplier = 1f;
-                scorePerPellet = 100;
+                scorePerPellet = 200;
                 speedIncreaseRate = 0f;
                 break;
             case Difficulties.MEDIUM:
                 blockSpawnDelay = 8f;
                 scoreMultiplier = 1.5f;
-                scorePerPellet = 80;
+                scorePerPellet = 180;
                 pelletSpawnDelay = 4f;
                 speedIncreaseRate = 0.05f;
                 break;
             case Difficulties.HARD:
                 blockSpawnDelay = 6f;
                 scoreMultiplier = 2f;
-                scorePerPellet = 70;
+                scorePerPellet = 160;
                 pelletSpawnDelay = 4f;
                 speedIncreaseRate = 0.1f;
                 break;
             case Difficulties.VERY_HARD:
                 blockSpawnDelay = 4f;
                 scoreMultiplier = 3f;
-                scorePerPellet = 60;
+                scorePerPellet = 150;
                 pelletSpawnDelay = 3f;
                 speedIncreaseRate = 0.2f;
                 break;
