@@ -9,15 +9,15 @@ public class SnakeHead : SnakeSegment {
     private GameManager gameManager;
     private GridManager gridManager;
     //Used for determing movment direction and parsing user input
-    private enum Directions {
+    public enum Directions {
         UP = 1,
         DOWN = -1,
-        LEFT = 2,
-        RIGHT = -2
+        LEFT = -2,
+        RIGHT = 2
     }
-    private Directions _direction = Directions.LEFT;
+    private Directions _direction = Directions.RIGHT;
     //Used to validate movment direction
-    private Directions _prevDirection = Directions.LEFT;
+    private Directions _prevDirection = Directions.RIGHT;
     public float speed = 6.0f;
     // World bounds for wraping
     private float rightBound, upperBound;
@@ -36,9 +36,9 @@ public class SnakeHead : SnakeSegment {
     }
     private void Update() {
         //Recieve user Input to change direction
-        if(Input.GetAxis("Horizontal") > 0){
+        if(Input.GetAxis("Horizontal") < 0){
             ChangeDirection(Directions.LEFT);
-        } else if ((Input.GetAxis("Horizontal") < 0)){
+        } else if ((Input.GetAxis("Horizontal") > 0)){
             ChangeDirection(Directions.RIGHT);
         } else if((Input.GetAxis("Vertical") > 0)){
             ChangeDirection(Directions.UP);
@@ -47,25 +47,28 @@ public class SnakeHead : SnakeSegment {
         }
     }
     
-    private void ChangeDirection(Directions direction){
+    public void ChangeDirection(Directions direction){
         // * Opposite directions have negative values of each other i.e right = 1 and left = -1
-        // * This is used to validate that the direction switched too isn't to the opposite of the current direction
+        // * This is used to validate that the direction switched to isn't to the opposite of the current direction
         //Change direction for next Move call based on user input
         if( (int)direction * -1 != (int)_prevDirection ){
             _direction = direction;
         }
     }
 
+    public Directions GetDirection(){
+        return _direction;
+    }
     public IEnumerator MoveSnake() {
         yield return new WaitForSeconds(1 / speed);
         Wrap();
         Vector3 oldPos = this.transform.position;
         switch(_direction){
-            case Directions.LEFT:
+            case Directions.RIGHT:
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
                 this.transform.position += new Vector3(blockWidth, 0, 0);
                 break;
-            case Directions.RIGHT:
+            case Directions.LEFT:
                 this.transform.rotation = Quaternion.Euler(0, 0, 180);
                 this.transform.position += new Vector3(-blockWidth, 0, 0);
                 break;

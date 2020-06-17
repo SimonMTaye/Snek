@@ -693,7 +693,6 @@ MonoBehaviour:
   rows: 0
   blockScale: {x: 0, y: 0, z: 0}
   gridOrigin: {x: 0, y: 0, z: 0}
-  SpritesToWorldUnit: 2
 --- !u!4 &830084608
 Transform:
   m_ObjectHideFlags: 0
@@ -1031,6 +1030,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1459236122 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1396881877768109782, guid: 37219714607400445a8500e09b2c9c6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 727158554}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1459236128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459236122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c948b3daad91274b9c99bae3d71fc0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swipeThreshold: 15
 --- !u!1 &1675685807
 GameObject:
   m_ObjectHideFlags: 0
