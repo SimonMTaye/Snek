@@ -8,34 +8,32 @@ public class UIRotator : MonoBehaviour
     private Canvas portraitCanvas;
     [SerializeField]
     private Canvas landscapeCanvas;
-    void Start()
-    {
-    }
 
+    private float checkDelay = 1f;
+    private float timer;
     // Update is called once per frame
     void Update()
     {
-        print(Input.deviceOrientation);
+        timer += Time.deltaTime;
+        if(timer >= checkDelay){
+            RotateUI();
+        }
+    }
+
+    private void RotateUI(){
+        timer = 0f;
         switch(Input.deviceOrientation){
             case DeviceOrientation.LandscapeLeft:
                 portraitCanvas.gameObject.SetActive(false);
                 landscapeCanvas.gameObject.SetActive(true);
-                landscapeCanvas.gameObject.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0f, 0f, 0f);
                 break;
             case DeviceOrientation.LandscapeRight:
                 portraitCanvas.gameObject.SetActive(false);
                 landscapeCanvas.gameObject.SetActive(true);
-                landscapeCanvas.gameObject.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0f, 0f, 180f);
                 break;
             case DeviceOrientation.Portrait:
                 landscapeCanvas.gameObject.SetActive(false);
                 portraitCanvas.gameObject.SetActive(true);
-                portraitCanvas.gameObject.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0f, 0f, 0f);
-                break;
-            case DeviceOrientation.PortraitUpsideDown:
-                landscapeCanvas.gameObject.SetActive(false);
-                portraitCanvas.gameObject.SetActive(true);
-                portraitCanvas.gameObject.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0f, 0f, 180f);
                 break;
         }
     }

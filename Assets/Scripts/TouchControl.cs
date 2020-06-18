@@ -11,11 +11,15 @@ public class TouchControl : MonoBehaviour
     [SerializeField]
     private float swipeThreshold = 30f;
     private float touchTimer;
+    private bool swipeMove;
+    private bool clickMove;
     // Start is called before the first frame update
     void Start()
     {
         touchTimer = 0f;
         player = this.gameObject.GetComponent<SnakeHead>();
+        clickMove = PlayerPrefs.GetInt("Touch Control", 0) == 1;
+        swipeMove = PlayerPrefs.GetInt("Touch Control", 0) == 2;
     }
 
     // Update is called once per frame
@@ -30,10 +34,10 @@ public class TouchControl : MonoBehaviour
             }
             if (touch.phase == TouchPhase.Ended){
                 fingerUpPos = touch.position;
-                if (touchTimer < 1f && PlayerPrefs.GetInt("Touch Control", 0) == 1)
+                if (touchTimer < 1f && clickMove )
                 {
                     ClickMove(fingerDownPos);
-                } else if (touchTimer < 2f && PlayerPrefs.GetInt("Touch Control", 0) == 2){
+                } else if (touchTimer < 2f && swipeMove){
                     SwipeMove(fingerUpPos, fingerDownPos);
                 }
             }
@@ -42,7 +46,7 @@ public class TouchControl : MonoBehaviour
     private void SwipeMove(Vector3 upPos, Vector3 downPos){
         float xOffset = upPos.x - downPos.x;
         float yOffset = upPos.y - downPos.y;
-        if(Mathf.Abs(xOffset) > swipeThreshold && Mathf.Abs(yOffset) < swipeThreshold){
+        if(Mathf.Abs(xOffset) > swipeThreshold && Mathf.Abs(xOffset / yOffset) > 1){
             if(xOffset < 0){
                 print("Going Left");
                 player.ChangeDirection(Directions.LEFT);
@@ -51,7 +55,7 @@ public class TouchControl : MonoBehaviour
                 player.ChangeDirection(Directions.RIGHT);
                 return;
             }
-        } else if (Mathf.Abs(yOffset) > swipeThreshold && Mathf.Abs(xOffset) < swipeThreshold){
+        } else if (Mathf.Abs(yOffset) > swipeThreshold && Mathf.Abs(yOffset / xOffset) > 1){
             if(yOffset < 0){
                 print("Going Down");
                 player.ChangeDirection(Directions.DOWN);
