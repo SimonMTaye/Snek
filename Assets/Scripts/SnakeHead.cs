@@ -48,6 +48,22 @@ public class SnakeHead : SnakeSegment {
             _direction = direction;
         }
     }
+    public void Rotate(){
+        switch(_direction){
+            case Directions.RIGHT:
+                ChangeDirection(Directions.UP);
+                break;
+            case Directions.LEFT:
+                ChangeDirection(Directions.DOWN);
+                break;
+            case Directions.UP:
+                ChangeDirection(Directions.RIGHT);
+                break;                
+            case Directions.DOWN:
+                ChangeDirection(Directions.LEFT);
+                break;                
+        }
+    }
 
     public Directions GetDirection(){
         return _direction;
@@ -62,19 +78,19 @@ public class SnakeHead : SnakeSegment {
         switch(_direction){
            case Directions.RIGHT:
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
-                this.transform.localPosition += new Vector3(1, 0, 0);
+                this.transform.localPosition += Vector3.right;
                 break;
             case Directions.LEFT:
                 this.transform.rotation = Quaternion.Euler(0, 0, 180);
-                this.transform.localPosition += new Vector3(-1, 0, 0);
+                this.transform.localPosition += Vector3.left;
                 break;
             case Directions.UP:
                 this.transform.rotation = Quaternion.Euler(0, 0, 90);
-                this.transform.localPosition += new Vector3(0, 1, 0);
+                this.transform.localPosition += Vector3.up;
                 break;
             case Directions.DOWN:
                 this.transform.rotation = Quaternion.Euler(0, 0, 270);
-                this.transform.localPosition += new Vector3(0, -1, 0);
+                this.transform.localPosition += Vector3.down;
                 break;
         }
         _prevDirection = _direction;

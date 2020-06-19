@@ -14,25 +14,25 @@ public class GridManager : MonoBehaviour
     //Determines how many sprites a single world unit can bold.
     //Settings this to a larger number will decrease the size of the sprites (increases the number of grid sqaures)
     private float spritesToWorldUnit;
+    //Used to check device orientation. Avoiding Screen.orientation for performace reasons
+    private float aspect;
     //Used to recalculate grid if device is rotated
-    private ScreenOrientation gridOrientation;
     private int gridSize;
     private void Awake() {
         gridSize = PlayerPrefs.GetInt("Grid Size", 2);
         spritesToWorldUnit = 1f + (0.5f * gridSize);
-        InitGrid();
+        InitGrid(Camera.main.aspect > 1);
     }
-    private void InitGrid()
+    private void InitGrid(bool landScape)
     {
-        gridOrientation = Screen.orientation;
-        //Calculate colums, rows and scale based on screen aspect ratio
-        if (Camera.main.aspect > 1)
+        aspect = Camera.main.aspect;
+        if (!landScape)
         {
-            rows = (int)(Camera.main.orthographicSize * 2 * spritesToWorldUnit);
-            columns = Mathf.FloorToInt((Camera.main.orthographicSize * 2 * spritesToWorldUnit) * Camera.main.aspect);
-        } else {
             rows =  Mathf.RoundToInt((Camera.main.orthographicSize * 2 * spritesToWorldUnit) / Camera.main.aspect);
             columns = (int) (Camera.main.orthographicSize * 2 * spritesToWorldUnit);
+        } else {
+            rows = (int)(Camera.main.orthographicSize * 2 * spritesToWorldUnit);
+            columns = Mathf.FloorToInt((Camera.main.orthographicSize * 2 * spritesToWorldUnit) * Camera.main.aspect);
         }
 
         blockScale = new Vector3(
@@ -50,15 +50,21 @@ public class GridManager : MonoBehaviour
     {
         return gridOrigin + new Vector3((float)gridX * blockScale.x, (float)gridY * blockScale.y);
     }
-
-    public Vector3 WorldPosToGrid(Vector3 worldPos){
-        return new Vector3 (worldPos.x / blockScale.x, worldPos.y / blockScale.y);
+    private void RotateGrid()
+    {
+        InitGrid(Camera.main.aspect > 1);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            if (child.GetComponent<SnakeHead>()){
+                child.GetComponent<SnakeHead>().Rotate();
+            }
+            child.transform.position = new Vector3(-child.transform.position.y, child.transform.position.x);
+        }
     }
-    private void RotateGrid(){
-        InitGrid();
-    }
-    private void Update() {
-        if(Screen.orientation != gridOrientation){
+    private void Update() 
+    {
+        if(aspect != Camera.main.aspect){
             RotateGrid();
         }
     }

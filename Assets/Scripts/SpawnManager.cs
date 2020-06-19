@@ -32,7 +32,10 @@ public class SpawnManager : MonoBehaviour
         if (Physics2D.OverlapCircle(spawnPoint, 1f)){
             return GenerateRandomPosition();
         } else {
-            return gridManager.WorldPosToGrid(spawnPoint);
+            return new Vector3(
+                -((gridManager.columns / 2f) -0.5f) + (xPos - 1),
+                -((gridManager.rows / 2f) -0.5f) + (yPos -1)
+            );
         }
     }
 }

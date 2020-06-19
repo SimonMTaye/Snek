@@ -14,7 +14,10 @@ public class UIRotator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotateUI();
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            RotateUI();
+        }
     }
 
     private void RotateUI(){
