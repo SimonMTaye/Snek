@@ -14,24 +14,21 @@ public class UIRotator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if(timer >= checkDelay){
-            RotateUI();
-        }
+        RotateUI();
     }
 
     private void RotateUI(){
         timer = 0f;
-        switch(Input.deviceOrientation){
-            case DeviceOrientation.LandscapeLeft:
+        switch(Screen.orientation){
+            case ScreenOrientation.LandscapeLeft:
                 portraitCanvas.gameObject.SetActive(false);
                 landscapeCanvas.gameObject.SetActive(true);
                 break;
-            case DeviceOrientation.LandscapeRight:
+            case ScreenOrientation.LandscapeRight:
                 portraitCanvas.gameObject.SetActive(false);
                 landscapeCanvas.gameObject.SetActive(true);
                 break;
-            case DeviceOrientation.Portrait:
+            case ScreenOrientation.Portrait:
                 landscapeCanvas.gameObject.SetActive(false);
                 portraitCanvas.gameObject.SetActive(true);
                 break;

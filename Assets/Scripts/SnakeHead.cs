@@ -5,7 +5,6 @@ using UnityEngine;
 public class SnakeHead : SnakeSegment {
 
     //Determines how far snake will move on each Move call
-    private float blockWidth, blockHeight;
     private GameManager gameManager;
     private GridManager gridManager;
     //Used for determing movment direction and parsing user input
@@ -15,24 +14,18 @@ public class SnakeHead : SnakeSegment {
         LEFT = -2,
         RIGHT = 2
     }
+    public Grid gridMan;
     private Directions _direction = Directions.RIGHT;
     //Used to validate movment direction
     private Directions _prevDirection = Directions.RIGHT;
     public float speed = 6.0f;
     // World bounds for wraping
-    private float rightBound, upperBound;
     private void Start() {
         StartCoroutine(MoveSnake());
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gridManager = GameObject.Find("GridManager").GetComponent<GridManager>();
+        gridManager = GameObject.Find("Grid").GetComponent<GridManager>();
         //Apply scale based on grid size from gridManager
-        this.ApplyScale(gridManager.blockScale);
-        //Start at 1,1 on the grid
-        this.transform.position = gridManager.GridToWorldPos(1, 1);
-        //Determine how much distance will be covered every move call (1 grid cell) 
-        blockHeight = this.transform.localScale.y;
-        blockWidth = this.transform.localScale.x;
-        CalculateBounds();
+        this.transform.localPosition = new Vector3(-((gridManager.columns / 2f) -0.5f), -((gridManager.rows / 2f) -0.5f));
     }
     private void Update() {
         //Recieve user Input to change direction
@@ -61,24 +54,27 @@ public class SnakeHead : SnakeSegment {
     }
     public IEnumerator MoveSnake() {
         yield return new WaitForSeconds(1 / speed);
-        Wrap();
-        Vector3 oldPos = this.transform.position;
+       if (Wrap()){
+         StartCoroutine(MoveSnake());
+         yield break;
+        }
+        Vector3 oldPos = this.transform.localPosition;
         switch(_direction){
-            case Directions.RIGHT:
+           case Directions.RIGHT:
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
-                this.transform.position += new Vector3(blockWidth, 0, 0);
+                this.transform.localPosition += new Vector3(1, 0, 0);
                 break;
             case Directions.LEFT:
                 this.transform.rotation = Quaternion.Euler(0, 0, 180);
-                this.transform.position += new Vector3(-blockWidth, 0, 0);
+                this.transform.localPosition += new Vector3(-1, 0, 0);
                 break;
             case Directions.UP:
                 this.transform.rotation = Quaternion.Euler(0, 0, 90);
-                this.transform.position += new Vector3(0, blockHeight, 0);
+                this.transform.localPosition += new Vector3(0, 1, 0);
                 break;
             case Directions.DOWN:
                 this.transform.rotation = Quaternion.Euler(0, 0, 270);
-                this.transform.position += new Vector3(0, -blockHeight, 0);
+                this.transform.localPosition += new Vector3(0, -1, 0);
                 break;
         }
         _prevDirection = _direction;
@@ -86,25 +82,28 @@ public class SnakeHead : SnakeSegment {
             child.Move(oldPos);
         }
         StartCoroutine(MoveSnake());
+
     }
-    private void Wrap(){
-        if (this.transform.position.x > rightBound){
-            this.transform.position = new Vector3(-rightBound, this.transform.position.y, 0);
-        } else if (this.transform.position.x < -rightBound){
-            this.transform.position = new Vector3(rightBound, this.transform.position.y, 0);
+    private bool Wrap(){
+        float rightBound = (gridManager.columns / 2f);
+        float upperBound = (gridManager.rows / 2f);
+        if (this.transform.localPosition.x > rightBound){
+            this.transform.localPosition = new Vector3(-(rightBound -0.5f), this.transform.localPosition.y, 0);
+            return true;
+        } else if (this.transform.localPosition.x < -rightBound){
+            this.transform.localPosition = new Vector3(rightBound -0.5f, this.transform.localPosition.y, 0);
+            return true;
         }
-        if(this.transform.position.y >upperBound ){
-            this.transform.position = new Vector3(this.transform.position.x, -upperBound, 0);
-        } else if(this.transform.position.y < -upperBound){
-            this.transform.position = new Vector3(this.transform.position.x, upperBound, 0);
+        if(this.transform.localPosition.y >upperBound){
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, -(upperBound - 0.5f), 0);
+            return true;
+        } else if(this.transform.localPosition.y < -upperBound){
+            this.transform.localPosition = new Vector3(this.transform.localPosition.x, upperBound -0.5f, 0);
+            return true;
         }
+        return false;
     }
 
-    private void CalculateBounds(){
-        //Determine size of world for wraping when off screen
-        upperBound = Camera.main.orthographicSize - (0.5f * this.transform.localScale.y);
-        rightBound = (Camera.main.orthographicSize * Camera.main.aspect) - (0.5f * this.transform.localScale.x);
-    }
     private void OnTriggerEnter2D(Collider2D other) {
         // Grow when pellet is consumed, else lose on collision
         if (other.tag == "Pellet"){

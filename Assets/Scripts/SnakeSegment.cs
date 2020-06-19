@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class SnakeSegment : MonoBehaviour
 {
+    private GameObject grid;
     [SerializeField]
     protected SnakeSegment child;
     public void Move (Vector3 pos){
         // Move to parent position and move child to this segment's old position
-        Vector3 oldPos = this.transform.position;
-        this.transform.position = pos;
+        Vector3 oldPos = this.transform.localPosition;
+        this.transform.localPosition = pos;
         if (child){
             child.Move(oldPos);
         }
@@ -20,8 +21,8 @@ public class SnakeSegment : MonoBehaviour
         if (child){
             child.AddChild();
         } else {
-            child = Instantiate(this, this.transform.position, Quaternion.identity);
-            child.ApplyScale(this.transform.localScale);
+            grid = GameObject.Find("Grid");
+            child = Instantiate(this, this.transform.position, Quaternion.identity, grid.transform);
         }
     }
     protected void DestroySegment(){
@@ -31,13 +32,6 @@ public class SnakeSegment : MonoBehaviour
             child.DestroySegment();
         } else {
             Destroy(this.gameObject);
-        }
-    }
-
-    protected void ApplyScale(Vector3 scale) {
-        this.transform.localScale = scale;
-        if (child){
-            child.ApplyScale(scale);
         }
     }
 }
