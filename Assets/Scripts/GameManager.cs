@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         player = GameObject.Find("Snek").GetComponent<SnakeHead>();
         uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        spawnManager.SpawnPellet();
+        spawnManager.SpawnPellet(false);
         spawnManager.SpawnBlock();
         //Start Coroutines
         StartCoroutine(BlockSpawner());

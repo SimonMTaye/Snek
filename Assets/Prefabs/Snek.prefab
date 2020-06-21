@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8427794883797548310}
   - component: {fileID: -4707939499349732571}
   - component: {fileID: -5946406149239244646}
+  - component: {fileID: 3106092322843161922}
   m_Layer: 0
   m_Name: Snek
   m_TagString: Untagged
@@ -145,4 +146,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   child: {fileID: 487061893286100535, guid: 95b8a2776d53f874cbfb3ba95e19ab28, type: 3}
   gridMan: {fileID: 0}
-  speed: 1
+  speed: 6
+  pelletConsumend: {fileID: 8300000, guid: 080be7131bf950347a82e8c7a8e7575f, type: 3}
+--- !u!114 &3106092322843161922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396881877768109782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c948b3daad91274b9c99bae3d71fc0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swipeThreshold: 15

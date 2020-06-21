@@ -13,6 +13,8 @@ public class Menu : MonoBehaviour
     private Scrollbar gridSizeSlider;
     [SerializeField]
     private Scrollbar touchControlSlider;
+    [SerializeField]
+    private AudioClip buttonPress;
 
     private void Start() {
         if(PlayerPrefs.GetInt("First Run", 0) == 0){
@@ -27,12 +29,15 @@ public class Menu : MonoBehaviour
     }
 
     public void ShowSettings(){
+        AudioSource.PlayClipAtPoint(buttonPress, Camera.main.transform.position);
         settingsPanel.SetActive(true);
     }
     public void HideSettings(){
+        AudioSource.PlayClipAtPoint(buttonPress, Camera.main.transform.position);
         settingsPanel.SetActive(false);
     }
     public void StartGame(){
+        AudioSource.PlayClipAtPoint(buttonPress, Camera.main.transform.position);
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
     public void SetDifficulty(){

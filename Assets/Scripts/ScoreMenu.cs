@@ -11,7 +11,8 @@ public class ScoreMenu : MonoBehaviour
     private Text highScoredDisplay;
     [SerializeField]
     private Text scoreDisplay;
-
+    [SerializeField]
+    private AudioClip buttonPress;
     private int score;
     void Start()
     {
@@ -21,10 +22,12 @@ public class ScoreMenu : MonoBehaviour
     }
 
     public void MainMenu(){
+        AudioSource.PlayClipAtPoint(buttonPress, Camera.main.transform.position);
         SceneManager.LoadScene("Home", LoadSceneMode.Single);
     }
 
     public void RestartGame(){
+        AudioSource.PlayClipAtPoint(buttonPress, Camera.main.transform.position);
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
 

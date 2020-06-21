@@ -9,16 +9,25 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject growthPellet;
     [SerializeField]
+    private AudioClip pelletSpawnedAudio;
+    [SerializeField]
     private GameObject grid;
     private GridManager gridManager;
 
     // Start is called before the first frame update
     void Start() {
     }
-    public void SpawnPellet(){
+    public void SpawnPellet(bool audio = true){
         GameObject pellet = Instantiate(growthPellet, new Vector3(1000, 1000), Quaternion.identity, grid.transform);
-        pellet.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+        if (PlayerPrefs.GetInt("Grid Size") <= 1)
+        {
+            pellet.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+        }
         pellet.transform.localPosition = GenerateRandomPosition();
+        if (audio)
+        {
+            AudioSource.PlayClipAtPoint(pelletSpawnedAudio, Camera.main.transform.position);
+        }
     }
     public void SpawnBlock(){
         GameObject block = Instantiate(blockPrefab, new Vector3(1000, 1000), Quaternion.identity, grid.transform);
