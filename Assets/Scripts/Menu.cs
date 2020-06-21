@@ -46,7 +46,6 @@ public class Menu : MonoBehaviour
 
     public void SetTouchControl(){
         int touchChoice = Mathf.RoundToInt(touchControlSlider.value * (touchControlSlider.numberOfSteps -1 ));
-        print("Touch Setting: " + touchChoice);
         PlayerPrefs.SetInt("Touch Control", touchChoice);
     }
 
