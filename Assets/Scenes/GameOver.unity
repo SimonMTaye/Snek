@@ -339,6 +339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highScoredDisplay: {fileID: 1882979221}
   scoreDisplay: {fileID: 398315311}
+  buttonPress: {fileID: 8300000, guid: ec7ecfc44ca5d20418ea911ea4dea097, type: 3}
 --- !u!114 &196465525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1902,6 +1903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highScoredDisplay: {fileID: 1092608516}
   scoreDisplay: {fileID: 1583190832}
+  buttonPress: {fileID: 8300000, guid: ec7ecfc44ca5d20418ea911ea4dea097, type: 3}
 --- !u!114 &2076167869
 MonoBehaviour:
   m_ObjectHideFlags: 0
