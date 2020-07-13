@@ -25,7 +25,7 @@ public class SnakeSegment : MonoBehaviour
             child = Instantiate(this, this.transform.position, Quaternion.identity, grid.transform);
         }
     }
-    protected void DestroySegment(){
+    public void DestroySegment(){
         // * Unused function. For future powerups
         // Remove the last child node from the snake
         if(child){

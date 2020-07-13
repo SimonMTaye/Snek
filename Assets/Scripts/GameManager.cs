@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour
     private SnakeHead player;
     //Determines how often blocks will be spawned
     private float blockSpawnDelay;
-    private float pelletSpawnDelay = 5f;
-    private float blockTimer = 0f;
+    private float pelletSpawnDelay;
     private float scoreMultiplier;
     private int score;
     private int scorePerPellet;
@@ -40,7 +39,8 @@ public class GameManager : MonoBehaviour
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         player = GameObject.Find("Snek").GetComponent<SnakeHead>();
         uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        spawnManager.SpawnPellet(false);
+        gridManager = GameObject.Find("Grid").GetComponent<GridManager>();
+        spawnManager.SpawnPellet();
         spawnManager.SpawnBlock();
         //Start Coroutines
         StartCoroutine(BlockSpawner());
@@ -48,14 +48,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ScoreIncreaser());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-   
+    public void UltimateVictory(){
+        score = 1073741824;
+        this.GameOver();
     }
-    // Called when player consumes pellet. 
-    public void PelletCollected(){
+   // Called when player consumes pellet. 
+    public void PelletCollected(Vector2 pelletPos){
         IncreaseScore(scorePerPellet);
+        gridManager.CellFreed(pelletPos);
         StartCoroutine(PelletSpawner());
     }
     //Spawns a new pellet after a fixed delay
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void IncreaseScore(int increaseValue){
-        score += (int)(increaseValue * scoreMultiplier);
+        score += (int)(increaseValue * (scoreMultiplier * player.length));
         uIManager.UpdateScore(score);
     }
     //Adjust game values based on selected difficulty values
@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
             switch (_difficulty) {
             case Difficulties.EASY:
                 blockSpawnDelay = 10f;
+                pelletSpawnDelay = 5f;
                 scoreMultiplier = 1f;
                 scorePerPellet = 200;
                 speedIncreaseRate = 0f;
