@@ -16,6 +16,7 @@ public class ScoreMenu : MonoBehaviour
     private int score;
     void Start()
     {
+        Screen.orientation = ScreenOrientation.AutoRotation;
         score = PlayerPrefs.GetInt("Last Score");
         DisplayAndSetHighScore();
         DisplayScore();
@@ -34,12 +35,15 @@ public class ScoreMenu : MonoBehaviour
     private void DisplayAndSetHighScore(){
         if (PlayerPrefs.HasKey("High Score")){
             int highScore = PlayerPrefs.GetInt("High Score");
-            if(highScore > score) {
-                highScoredDisplay.text = "High Score: " + highScore;
-            } else {
+            if (score == 1073741824){
+                highScoredDisplay.text = "Welcome to f_society";
+            }
+            else if(highScore < score) {
                 highScoredDisplay.text = "Congratulations! You set a new high score!";
                 PlayerPrefs.SetInt("High Score", score);
-            }
+            } else {
+                highScoredDisplay.text = "High Score: " + highScore;
+           }
         } else {
             highScoredDisplay.gameObject.SetActive(false);
             PlayerPrefs.SetInt("High Score", score);

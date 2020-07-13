@@ -8,9 +8,9 @@ public class UIRotator : MonoBehaviour
     private Canvas portraitCanvas;
     [SerializeField]
     private Canvas landscapeCanvas;
-
-    private float checkDelay = 1f;
-    private float timer;
+    private void Start() {
+        Screen.orientation = ScreenOrientation.AutoRotation;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -21,7 +21,6 @@ public class UIRotator : MonoBehaviour
     }
 
     private void RotateUI(){
-        timer = 0f;
         switch(Screen.orientation){
             case ScreenOrientation.LandscapeLeft:
                 portraitCanvas.gameObject.SetActive(false);
