@@ -6,26 +6,24 @@ public class GridManager : MonoBehaviour
 {
     //Number of colums and rows the grid will have. 
     //Rows will be a multiple of 10 while columns are determined based on aspect ratio
+    [SerializeField]
+    private SnakeHead player;
     public int columns, rows;
-    //Scale for each grid cell. Required to fill screen and avoid incomplete blocks
-    private Vector3 blockScale;
+    //Store a list of all free grid positions
+    private List<Vector2> freeCells;
     //World point for 0,0 on grid (offscreen). Used to determine location of other grid cells
-    private Vector3 gridOrigin;
+    private Vector2 gridOrigin;
     //Determines how many sprites a single world unit can bold.
     //Settings this to a larger number will decrease the size of the sprites (increases the number of grid sqaures)
-    private float spritesToWorldUnit;
-    //Used to check device orientation. Avoiding Screen.orientation for performace reasons
-    private float aspect;
-    //Used to recalculate grid if device is rotated
-    private int gridSize;
     private void Awake() {
-        gridSize = PlayerPrefs.GetInt("Grid Size", 2);
-        spritesToWorldUnit = 1f + (0.5f * gridSize);
+        player = GameObject.Find("Snek").GetComponent<SnakeHead>();
         InitGrid(Camera.main.aspect > 1);
     }
     private void InitGrid(bool landScape)
-    {
-        aspect = Camera.main.aspect;
+    {   
+        int gridSize = PlayerPrefs.GetInt("Grid Size", 2);
+        float spritesToWorldUnit = 1f + (0.5f * gridSize);
+        Screen.orientation = Screen.orientation;
         if (!landScape)
         {
             rows =  Mathf.RoundToInt((Camera.main.orthographicSize * 2 * spritesToWorldUnit) / Camera.main.aspect);
@@ -34,38 +32,44 @@ public class GridManager : MonoBehaviour
             rows = (int)(Camera.main.orthographicSize * 2 * spritesToWorldUnit);
             columns = Mathf.FloorToInt((Camera.main.orthographicSize * 2 * spritesToWorldUnit) * Camera.main.aspect);
         }
-
-        blockScale = new Vector3(
-            (Camera.main.aspect * Camera.main.orthographicSize * 2) / columns,
-            (Camera.main.orthographicSize * 2) / rows, 
-            1f);
-        gridOrigin = new Vector3(
-             (-(columns / 2) * blockScale.x) - (blockScale.x * 2),
-             (-(rows / 2) * blockScale.y) - (blockScale.y * 2), 
-            1
+        
+        gridOrigin = new Vector2(
+            ( ( -( (float)columns / 2f) - 0.5f)),
+            ( ( -( (float)rows / 2f) - 0.5f))
             );
-        this.transform.localScale = blockScale;
-    }
-    public Vector3 GridToWorldPos(int gridX, int gridY)
-    {
-        return gridOrigin + new Vector3((float)gridX * blockScale.x, (float)gridY * blockScale.y);
-    }
-    private void RotateGrid()
-    {
-        InitGrid(Camera.main.aspect > 1);
-        for (int i = 0; i < transform.childCount; i++)
+        freeCells = new List<Vector2>();
+        for (int i = 1, index = 0; i <= columns; i++)
         {
-            Transform child = transform.GetChild(i);
-            if (child.GetComponent<SnakeHead>()){
-                child.GetComponent<SnakeHead>().Rotate();
+            for (int j = 1; j <= rows; j ++, index ++){
+                freeCells.Add(GridNumberToPos(i, j));
             }
-            child.transform.position = new Vector3(-child.transform.position.y, child.transform.position.x);
         }
+        this.transform.localScale = new Vector3(
+                (Camera.main.aspect * Camera.main.orthographicSize * 2) / columns,
+                (Camera.main.orthographicSize * 2) / rows,
+                1f);
+        player.transform.localPosition = GridNumberToPos(2, 1);
     }
-    private void Update() 
+    public Vector2 GridNumberToPos(int gridX, int gridY)
     {
-        if(aspect != Camera.main.aspect){
-            RotateGrid();
+        return gridOrigin + new Vector2(gridX, gridY);
+    }
+    public Vector2 GetRandomGridPos(){
+        if (freeCells.Count <= player.length){
+            GameObject.Find("GameManager").GetComponent<GameManager>().UltimateVictory();
         }
+        int posIndex;
+        Vector2 pos;
+        do
+        {
+            posIndex = Random.Range(0, freeCells.Count);
+            pos = freeCells[posIndex];
+        }
+        while (Physics2D.OverlapCircle(pos, 0.3f) && Physics2D.OverlapCircle(pos, 0.3f).tag == "Player");
+        freeCells.RemoveAt(posIndex);
+        return pos;
+    }
+    public void CellFreed(Vector2 pos){
+        freeCells.Add(pos);
     }
 }
