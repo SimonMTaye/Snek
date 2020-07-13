@@ -8,8 +8,13 @@ public class TouchControl : MonoBehaviour
 
     private SnakeHead player;
     private Vector3 fingerUpPos, fingerDownPos;
+    // Used to determine if swipes will be detected. 
+    //swipreThreshold determines minimun swipe distance for detection
+    // ratioThreshold determines how much the x-distance of a swipe must be than the y-distance (and vice versa) 
+    // to be registered as a swipe
     [SerializeField]
     private float swipeThreshold = 30f;
+    private float ratioThreshold = 1.3f;
     private float touchTimer;
     private bool swipeMove;
     private bool clickMove;
@@ -46,7 +51,7 @@ public class TouchControl : MonoBehaviour
     private void SwipeMove(Vector3 upPos, Vector3 downPos){
         float xOffset = upPos.x - downPos.x;
         float yOffset = upPos.y - downPos.y;
-        if(Mathf.Abs(xOffset) > swipeThreshold && Mathf.Abs(xOffset / yOffset) > 1){
+        if(Mathf.Abs(xOffset) > swipeThreshold && Mathf.Abs(xOffset / yOffset) > ratioThreshold){
             if(xOffset < 0){
                 print("Going Left");
                 player.ChangeDirection(Directions.LEFT);
@@ -55,7 +60,7 @@ public class TouchControl : MonoBehaviour
                 player.ChangeDirection(Directions.RIGHT);
                 return;
             }
-        } else if (Mathf.Abs(yOffset) > swipeThreshold && Mathf.Abs(yOffset / xOffset) > 1){
+        } else if (Mathf.Abs(yOffset) > swipeThreshold && Mathf.Abs(yOffset / xOffset) > ratioThreshold){
             if(yOffset < 0){
                 print("Going Down");
                 player.ChangeDirection(Directions.DOWN);
