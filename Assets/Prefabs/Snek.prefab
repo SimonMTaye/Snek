@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3106092322843161922}
   m_Layer: 0
   m_Name: Snek
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,7 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 487061893286100535, guid: 95b8a2776d53f874cbfb3ba95e19ab28, type: 3}
-  gridMan: {fileID: 0}
+  segmentLostClip: {fileID: 8300000, guid: 3cd781496e49b3f4da19f933b2162f5b, type: 3}
+  length: 2
   speed: 6
   pelletConsumend: {fileID: 8300000, guid: 080be7131bf950347a82e8c7a8e7575f, type: 3}
 --- !u!114 &3106092322843161922
