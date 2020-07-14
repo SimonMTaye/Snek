@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField]
+    private GameObject helpPanel;
+    [SerializeField]
     private GameObject settingsPanel;
     [SerializeField]
     private Scrollbar difficultySlider;
@@ -18,14 +20,23 @@ public class MainMenu : MonoBehaviour
 
     private void Start() {
         if(PlayerPrefs.GetInt("First Run", 0) == 0){
+            ShowHelp();
             PlayerPrefs.SetInt("Difficulty", 1);
             PlayerPrefs.SetInt("Grid Size", 2);
             PlayerPrefs.SetInt("First Run", 1);
             PlayerPrefs.SetInt("Touch Control", 2);
         }
         difficultySlider.value = (float)PlayerPrefs.GetInt("Difficulty") / (difficultySlider.numberOfSteps - 1);
-        gridSizeSlider.value = ((float)PlayerPrefs.GetInt("Grid Size")) / (gridSizeSlider.numberOfSteps -1);        
+        gridSizeSlider.value = ((float)PlayerPrefs.GetInt("Grid Size")) - 1/ (gridSizeSlider.numberOfSteps -1);        
         touchControlSlider.value = ((float)PlayerPrefs.GetInt("Touch Control")) / (touchControlSlider.numberOfSteps -1);
+    }
+    public void ShowHelp(){
+        AudioSource.PlayClipAtPoint(buttonPress, Camera.main.transform.position);
+        helpPanel.SetActive(true);
+    }
+    public void HideHelp(){
+        AudioSource.PlayClipAtPoint(buttonPress, Camera.main.transform.position);
+        helpPanel.SetActive(false);
     }
 
     public void ShowSettings(){
@@ -45,7 +56,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt("Difficulty", difficulty);
     }
     public void SetGridSize(){
-        int size = Mathf.RoundToInt(gridSizeSlider.value * (gridSizeSlider.numberOfSteps -1 ));
+        int size = Mathf.RoundToInt((gridSizeSlider.value + 1) * (gridSizeSlider.numberOfSteps -1 ));
         PlayerPrefs.SetInt("Grid Size", size);
     }
 
@@ -57,6 +68,10 @@ public class MainMenu : MonoBehaviour
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)){
             HideSettings();
+            HideHelp();
+        }
+        if(Input.GetMouseButtonDown(0)){
+            HideHelp();
         }
         if(Input.GetKeyDown(KeyCode.Space)){
             StartGame();

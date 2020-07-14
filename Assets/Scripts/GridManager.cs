@@ -22,7 +22,7 @@ public class GridManager : MonoBehaviour
     private void InitGrid(bool landScape)
     {   
         int gridSize = PlayerPrefs.GetInt("Grid Size", 2);
-        float spritesToWorldUnit = 1f + (0.5f * gridSize);
+        float spritesToWorldUnit = 0.5f + gridSize;
         Screen.orientation = Screen.orientation;
         if (!landScape)
         {

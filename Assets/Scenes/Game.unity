@@ -469,12 +469,12 @@ PrefabInstance:
     - target: {fileID: 5240947991378166720, guid: 37219714607400445a8500e09b2c9c6e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -166.57608
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5240947991378166720, guid: 37219714607400445a8500e09b2c9c6e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1145.762
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5240947991378166720, guid: 37219714607400445a8500e09b2c9c6e,
         type: 3}
@@ -984,12 +984,12 @@ PrefabInstance:
     - target: {fileID: 3494543453159115974, guid: 95b8a2776d53f874cbfb3ba95e19ab28,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -168.32608
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3494543453159115974, guid: 95b8a2776d53f874cbfb3ba95e19ab28,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1145.762
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3494543453159115974, guid: 95b8a2776d53f874cbfb3ba95e19ab28,
         type: 3}
@@ -1074,7 +1074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockPrefab: {fileID: 6853106677788136759, guid: 1264dd87cb08f6b41b4f65e6f1ec0b5c,
     type: 3}
-  growthPellet: {fileID: 3441494890872702023, guid: 32207a8dfb00ad046834e9c8510f3034,
+  pelletPrefab: {fileID: 3441494890872702023, guid: 32207a8dfb00ad046834e9c8510f3034,
     type: 3}
   pelletSpawnedAudio: {fileID: 8300000, guid: 593ee37f3a382a145b13f2ecc20970fe, type: 3}
   grid: {fileID: 2033143757}
@@ -1481,5 +1481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734a30ca06d3c1f44a3402216508ac37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   columns: 0
   rows: 0

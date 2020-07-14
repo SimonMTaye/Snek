@@ -134,11 +134,11 @@ public class SnakeHead : SnakeSegment
 
     protected new void DestroySegment(){
         length--;
+        AudioSource.PlayClipAtPoint(segmentLostClip, Camera.main.transform.position);
+        child.DestroySegment();
         if (length < 2){
             gameManager.GameOver();
         }
-        AudioSource.PlayClipAtPoint(segmentLostClip, Camera.main.transform.position);
-        child.DestroySegment();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
