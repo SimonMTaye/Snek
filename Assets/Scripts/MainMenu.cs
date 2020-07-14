@@ -29,6 +29,9 @@ public class MainMenu : MonoBehaviour
         difficultySlider.value = (float)PlayerPrefs.GetInt("Difficulty") / (difficultySlider.numberOfSteps - 1);
         gridSizeSlider.value = ((float)PlayerPrefs.GetInt("Grid Size")) - 1/ (gridSizeSlider.numberOfSteps -1);        
         touchControlSlider.value = ((float)PlayerPrefs.GetInt("Touch Control")) / (touchControlSlider.numberOfSteps -1);
+        // Hide settings and help panels when entering main menu scene
+        HideSettings();
+        HideHelp();
     }
     public void ShowHelp(){
         AudioSource.PlayClipAtPoint(buttonPress, Camera.main.transform.position);
